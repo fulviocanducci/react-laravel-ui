@@ -9,14 +9,21 @@ class TodoController extends Controller
 {
     public function index(Request $request)
     {
-        return response()
-            ->json(Todo::get());
+        return response()->json(Todo::get());
     }
 
     public function store(Request $request)
     {
         $todo = Todo::create($request->all());
-        return response()
-            ->json($todo);
+        return response()->json($todo);
+    }
+
+    public function delete(Todo $todo)
+    {
+        $status = false;
+        if ($todo) {
+            $status = $todo->delete();
+        }
+        return response()->json(['status' => $status]);
     }
 }
